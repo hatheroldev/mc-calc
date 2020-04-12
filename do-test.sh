@@ -1,2 +1,2 @@
-#cask
+cask
 cask exec ecukes --quiet
