@@ -32,3 +32,4 @@ Useful links for test development:
 
 ***
 [![GPL v3](https://img.shields.io/badge/license-GPL_v3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
+[![Behaviour Test](https://github.com/hatheroldev/mc-calc/workflows/Behaviour%20Test/badge.svg)](https://github.com/hatheroldev/mc-calc/actions?query=workflow%3A%22Behaviour+Test%22)
