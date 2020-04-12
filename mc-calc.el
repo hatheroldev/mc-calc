@@ -1,10 +1,10 @@
-;;; mc-calc.el --- combine multiple-cursors and calc  -*- lexical-binding: t; -*-
+;;; mc-calc.el --- Combine multiple-cursors and calc  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 Frank Roland
 
 ;; Author: Frank Roland hatheroldev@fgmail.com>
 ;; Keywords: convenience
-;; Package-Requires (multiple-cursors calc)
+;; Package-Requires: ((emacs "24.4") (multiple-cursors "1.2.1"))
 ;; Version: 0.0.1
 ;; URL: https://github.com/hatheroldev/mc-calc
 
@@ -28,12 +28,14 @@
 ;;; Code:
 
 (require 'multiple-cursors)
-(require 'subr-x)
+(require 'subr-x) ; string-join
+(require 'calc-ext) ; math-read-expr
 
 (defgroup mc-calc nil
   "Combine multiple-cursors and calc."
   :prefix "mc-calc-"
-  :tag    "mc-calc")
+  :tag    "mc-calc"
+  :group 'convenience)
 
 (defcustom mc-calc-major-mode-eval-options-alist nil
   "Alist of major modes with `calc-eval' options.
@@ -107,8 +109,7 @@ Set `mc-calc-eval-options' to configure calc options."
   (setq var-mccursors (mc/num-cursors)))
 
 (defun mc-calc--quit ()
-  "Quit calc, if it was not already visible, and return
-to previous buffer."
+  "Quit calc, if it was not already visible, and return to previous buffer."
   (when mc-calc-from-buffer
     (if mc-calc-was-started
         (pop-to-buffer mc-calc-from-buffer)
@@ -139,15 +140,9 @@ The variables `mc-calc-from-buffer' and `mc-calc-was-started' are set so that
 after some operations are performed on the vector the result can be copied
 back with `mc-calc-copy-to-buffer'."
   (mc-calc--set-values)
-  (let* (vals)
-    (calc)
-    (setq vals (math-read-expr
-                (concat "["
-                        (string-join (mapcar
-                                      (lambda (val)
-                                        (calc-eval val))
-                                      data) ", ")
-                        "]")))
+  (calc)
+  (let ((vals (math-read-expr
+               (concat "[" (string-join (mapcar #'calc-eval data) ", ") "]"))))
     (and (eq (car-safe vals) 'vec)
          (= (length vals) 2)
          (eq (car-safe (nth 1 vals)) 'vec)
