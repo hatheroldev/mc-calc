@@ -8,11 +8,11 @@ Feature: Work with vectors
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
-    And I call "move-end-of-line"
+    And I call "end-of-line"
     And I call "mc-calc-grab"
     Then I should be in buffer "*Calculator*"
 
@@ -35,11 +35,11 @@ Feature: Work with vectors
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
-    And I call "move-end-of-line"
+    And I call "end-of-line"
     And I call "mc-calc-grab"
     Then I should be in buffer "*Calculator*"
 
@@ -54,6 +54,36 @@ Feature: Work with vectors
     """
     And the buffer "*Calculator*" should not be visible
 
+  Scenario: Calc ignores options for pop and push
+    Given I insert:
+    """
+    4
+    5
+    """
+
+    When I call "c-mode"
+    And I go to beginning of buffer
+    And I call "mc/mark-next-lines"
+    Then I should have 2 cursors
+
+    When I set mc-calc-major-mode-eval-options-alist to ((c-mode . (calc-language c calc-word-size 32 calc-leading-zeros t)))
+    And I set mc-calc-eval-options to (calc-number-radix 16)
+    And I set the mark
+    And I call "end-of-line"
+    And I call "mc-calc-grab"
+    Then I should be in buffer "*Calculator*"
+
+    When I type "5"
+    And I type "+"
+    And I call "mc-calc-copy-to-buffer"
+    Then I should be in buffer "mc-calc-test"
+    And I should see:
+    """
+    9
+    10
+    """
+    And the buffer "*Calculator*" should not be visible
+
   Scenario: Substitute each cursor with single calc element
     Given I insert:
     """
@@ -62,11 +92,11 @@ Feature: Work with vectors
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
-    And I call "move-end-of-line"
+    And I call "end-of-line"
     And I call "mc-calc-grab"
     Then I should be in buffer "*Calculator*"
 
@@ -88,11 +118,11 @@ Feature: Work with vectors
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
-    And I call "move-end-of-line"
+    And I call "end-of-line"
     And I call "mc-calc"
     Then I should be in buffer "*Calculator*"
 
@@ -116,11 +146,11 @@ Feature: Work with vectors
     x
     """
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
-    And I call "move-end-of-line"
+    And I call "end-of-line"
     And I call "mc-calc"
     Then I should be in buffer "*Calculator*"
 
