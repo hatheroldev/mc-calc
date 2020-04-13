@@ -27,4 +27,4 @@ jobs:
           version: 'snapshot'
 
       - name: Run tests
-        run: ./do-test.sh
+        run: ./bt.sh
