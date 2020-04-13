@@ -159,6 +159,7 @@ back with `mc-calc-copy-to-buffer'."
      (lambda (val)
        (setq data (cons (math-format-value val) data)))
      vals)
+    (calc-eval 1 'pop)                  ; Remove top element from calc stack
     (nreverse data)))
 
 ;;; Do not autoload
@@ -179,7 +180,6 @@ from within the calc buffer."
       (user-error "Vector length does not match number of multiple cursors"))
     (setq mc--strings-to-replace data))
   (mc--replace-region-strings)
-  (calc-pop-stack 1)
   (mc-calc--quit))
 
 (provide 'mc-calc)
