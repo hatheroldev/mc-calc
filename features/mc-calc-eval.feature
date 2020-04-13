@@ -8,7 +8,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
@@ -31,7 +31,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
@@ -54,7 +54,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark
@@ -77,7 +77,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     And I set the mark
     And I call "end-of-line"
     Then I should have 2 cursors
@@ -99,7 +99,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     And I set the mark
     And I call "end-of-line"
     Then I should have 2 cursors
@@ -116,24 +116,24 @@ Feature: Replace region with calc eval
   Scenario: Set calc options and automatic options derived from mode
     Given I insert:
     """
-    9
+    0x9
     10
     """
 
     When I call "c-mode"
     And I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     And I set the mark
     And I call "end-of-line"
     Then I should have 2 cursors
 
-    When I set mc-calc-major-mode-eval-options-alist to ((c-mode . (calc-word-size 32 calc-leading-zeros t)))
-    When I set mc-calc-eval-options to (calc-number-radix 16)
+    When I set mc-calc-major-mode-eval-options-alist to ((c-mode . (calc-language c calc-word-size 32 calc-leading-zeros t)))
+    And I set mc-calc-eval-options to (calc-number-radix 16)
     And I call "mc-calc-eval"
     Then I should see:
     """
-    16#00000009
-    16#0000000A
+    0x00000009
+    0x0000000A
     """
     And the buffer "*Calculator*" should not be visible
 
@@ -146,7 +146,7 @@ Feature: Replace region with calc eval
 
     When I call "c-mode"
     And I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     And I set the mark
     And I call "end-of-line"
     Then I should have 2 cursors
@@ -171,7 +171,7 @@ Feature: Replace region with calc eval
     """
 
     When I go to beginning of buffer
-    And I call "mc/mark-next-like-this"
+    And I call "mc/mark-next-lines"
     Then I should have 2 cursors
 
     When I set the mark

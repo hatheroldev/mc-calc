@@ -29,7 +29,6 @@
 
 (require 'multiple-cursors)
 (require 'subr-x) ; string-join
-(require 'calc-ext) ; math-read-expr
 
 (defgroup mc-calc nil
   "Combine multiple-cursors and calc."
@@ -41,7 +40,9 @@
   "Alist of major modes with `calc-eval' options.
 
 Note: calc automatically sets `calc-language' from `major-mode'."
-  :group 'mc-calc)
+  :group 'mc-calc
+  :type '(alist :key-type (symbol :tag "Major mode")
+                :value-type (list :tag "Key/value pairs")))
 
 (defcustom mc-calc-eval-options nil
   "Control calc settings.
@@ -55,7 +56,8 @@ You can
 - set it to nil to reset all calc settings to default,
 - set key value pairs to be used as calc settings,
   e.g. '(calc-number-radix 16)."
-  :group 'mc-calc)
+  :group 'mc-calc
+  :type '(list :tag "Key/value pairs"))
 
 (defvar mc-calc-from-buffer nil
   "The buffer to return to.")
@@ -76,6 +78,10 @@ You can
     ;; Use calc as currently set
     val))
 
+(defun mc-calc--eval (val &rest rest)
+  "Call `calc-eval' with VAL plus options and REST."
+  (apply #'calc-eval (mc-calc--eval-first-param val) rest))
+
 ;;;###autoload
 (defun mc-calc-eval ()
   "Eval each cursor region in calc.
@@ -93,8 +99,8 @@ Set `mc-calc-eval-options' to configure calc options."
           (mapcar
            (lambda (val)
              (prog1
-                 (calc-eval
-                  (mc-calc--eval-first-param val)
+                 (mc-calc--eval
+                  val
                   nil
                   i                     ; Available as $ in calc-eval
                   num)                  ; Available as $$ in calc-eval
@@ -141,21 +147,13 @@ after some operations are performed on the vector the result can be copied
 back with `mc-calc-copy-to-buffer'."
   (mc-calc--set-values)
   (calc)
-  (let ((vals (math-read-expr
-               (concat "[" (string-join (mapcar #'calc-eval data) ", ") "]"))))
-    (and (eq (car-safe vals) 'vec)
-         (= (length vals) 2)
-         (eq (car-safe (nth 1 vals)) 'vec)
-         (setq vals (nth 1 vals)))
-    (when (eq (car-safe vals) 'error)
-      (mc-calc--quit)
-      (error (nth 2 vals)))
-    (calc-slow-wrapper
-     (calc-enter-result 0 "mc" vals))))
+  (mc-calc--eval
+   (concat "[" (string-join (mapcar #'calc-eval data) ", ") "]")
+   'push))
 
 (defun mc-calc-vec--top-get ()
   "Get calc top vector and return it as list of strings."
-  (let ((vals (calc-top-n))
+  (let ((vals (mc-calc--eval 1 'rawtop))
         data)
     (math-map-vec
      (lambda (val)

@@ -28,6 +28,7 @@
  (multiple-cursors-mode 0)
  (erase-buffer)
  (deactivate-mark)
+ (setq mc-calc-major-mode-eval-options-alist nil)
  (setq mc-calc-eval-options t)
  (calc)
  (calc-reset 0)
