@@ -22,7 +22,7 @@ Please use `M-x finder-commentary mc-calc` for documentation.
 ## Usage Examples
 
 All following examples assume you know how to use `multiple-cursors`.
-However, to enable you follow them even if you don't I use the verb *to mc*, which shall mean the following operations:
+But so that you can follow without knowing `multiple-cursors`, I use the verb *to mc*, which means the following operations:
 
 - move the cursor to the beginning of the first element of interest (number or expression),
 - mark each line with `M-x mc/mark-next-lines`,
@@ -32,7 +32,7 @@ You can disable `multiple-cursors` after using it by entering `RET`.
 
 ### Simple Calculations
 
-Say your write code in `C` and want to evaluate the following formulas:
+Say you write code in `C` and want to evaluate the following formulas:
 
 ```c
 #defun BITMASK_BIT1 2^1
@@ -84,14 +84,23 @@ To get these values back into the table you use `M-x mc-calc-copy-to-buffer`, di
 
 ## Testing
 
-Execute:
+First install [Cask](https://github.com/cask/cask).
+
+Then execute unit tests:
 
 ```shell
-./do-test.sh
+./ut.sh
+```
+
+and behavior tests:
+
+```shell
+./br.sh
 ```
 
 Useful links for test development:
 
+-   [Tuxicity: Unit testing in Emacs](https://rejeep.github.io/emacs/testing/cask/ert-runner/2013/09/26/unit-testing-in-emacs.html)
 -   <https://github.com/ecukes/ecukes>
 -   <https://github.com/ecukes/espuds>
 
