@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: "\U0001F41B Bug Report"
 about: Create a report to help us improve
 title: ''
 labels: bug
@@ -22,6 +22,13 @@ A clear and concise description of what you expected to happen:
  - Emacs version [e.g. 26.3]
  - multiple-cursors version [e.g. 1.4.0]
 
+**Your Configuration of mc-calc**
+Please provide your configuration (if relevant to the bug report):
+
+```elisp
+(require 'mc-calc')
+```
+
 **Additional context**
 Please include a backtrace in your report.  In most cases doing:
 
@@ -30,3 +37,6 @@ Please include a backtrace in your report.  In most cases doing:
 and then going through the steps again should result in a backtrace.
 
 Before reporting a defect please try to reproduce it using an Emacs instance in which only mc-calc and its dependencies (multiple-colors and calc) have been loaded. Other packages or your configuration should not be loaded. This makes it easier to determine whether the issue lays with mc-calc or something else.
+
+**Possible Solution**
+<!--- Only if you have suggestions on a fix for the bug -->
