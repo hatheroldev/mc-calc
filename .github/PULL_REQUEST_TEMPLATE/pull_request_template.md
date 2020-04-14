@@ -37,3 +37,4 @@ Provide link to issues closed or feature request implemented by this pull reques
 - [ ] My change requires changes in existing or additional behaviour tests.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
+- [ ] I have confirmed some of these without doing them.
