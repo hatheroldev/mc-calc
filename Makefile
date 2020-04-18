@@ -18,6 +18,9 @@ compile: cask
      (setq byte-compile-error-on-warn t)) \
      (batch-byte-compile))" mc-calc.el
 
+lint: cask
+	${CASK} exec ${EMACS} -Q --batch -l elisp-lint.el -f elisp-lint-files-batch *.el
+
 unittest: cask
 	${CASK} exec ert-runner
 

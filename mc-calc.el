@@ -96,7 +96,7 @@ Set `mc-calc-eval-options' to configure calc options."
   (interactive)
   (let* ((vals (mc--ordered-region-strings))
          (num (length vals))
-         (i -1))                          ; Cursor number, usable as $ in formula.
+         (i -1))                       ; Cursor number, usable as $ in formula.
     (setq mc--strings-to-replace
           (mapcar
            (lambda (val)
