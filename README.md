@@ -106,5 +106,7 @@ Useful links for test development:
 
 ***
 [![GPL v3](https://img.shields.io/badge/license-GPL_v3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
+[![Compile Test](https://github.com/hatheroldev/mc-calc/workflows/Compile%20Test/badge.svg)](https://github.com/hatheroldev/mc-calc/actions?query=workflow%3A%22Compile+Test%22)
+[![Lint](https://github.com/hatheroldev/mc-calc/workflows/Lint/badge.svg)](https://github.com/hatheroldev/mc-calc/actions?query=workflow%3A%22Lint%22)
 [![Unit Test](https://github.com/hatheroldev/mc-calc/workflows/Unit%20Test/badge.svg)](https://github.com/hatheroldev/mc-calc/actions?query=workflow%3A%22Unit+Test%22)
 [![Behaviour Test](https://github.com/hatheroldev/mc-calc/workflows/Behaviour%20Test/badge.svg)](https://github.com/hatheroldev/mc-calc/actions?query=workflow%3A%22Behaviour+Test%22)
