@@ -24,9 +24,9 @@ Please use `M-x finder-commentary mc-calc` for documentation.
 All following examples assume you know how to use `multiple-cursors`.
 But so that you can follow without knowing `multiple-cursors`, I use the verb *to mc*, which means the following operations:
 
-- move the cursor to the beginning of the first element of interest (number or expression),
-- mark each line with `M-x mc/mark-next-lines`,
-- activate the region for each cursor over the element of interest by issuing `C-SPC` and moving the cursor right.
+  - move the cursor to the beginning of the first element of interest (number or expression),
+  - mark each line with `M-x mc/mark-next-lines`,
+  - activate the region for each cursor over the element of interest by issuing `C-SPC` and moving the cursor right.
 
 You can disable `multiple-cursors` after using it by entering `RET`.
 

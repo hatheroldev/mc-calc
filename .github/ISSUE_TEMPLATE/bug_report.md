@@ -18,9 +18,9 @@ A clear and concise description of what you expected to happen:
 3. and how we can reproduce the issue.
 
 **Please complete the following information:**
- - OS: [e.g. Ubuntu 19.10]
- - Emacs version [e.g. 26.3]
- - multiple-cursors version [e.g. 1.4.0]
+- OS: (e.g. Ubuntu 19.10)
+- Emacs version (e.g. 26.3)
+- multiple-cursors version (e.g. 1.4.0)
 
 **Your Configuration of mc-calc**
 Please provide your configuration (if relevant to the bug report):
