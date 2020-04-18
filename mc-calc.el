@@ -28,7 +28,9 @@
 ;;; Code:
 
 (require 'multiple-cursors)
-(require 'subr-x) ; string-join
+(require 'subr-x)                       ; string-join
+(require 'calc)                         ; calc-quit, math-format-value
+(require 'calc-vec)                     ; mat-map-vec
 
 (defgroup mc-calc nil
   "Combine multiple-cursors and calc."
@@ -111,8 +113,9 @@ Set `mc-calc-eval-options' to configure calc options."
 (defun mc-calc--set-values ()
   "Set values in order to use `mc-calc-copy-to-buffer'."
   (setq mc-calc-from-buffer (current-buffer))
-  (setq mc-calc-was-started (get-buffer-window "*Calculator*" 'visible))
-  (setq var-mccursors (mc/num-cursors)))
+  (setq mc-calc-was-started-p (get-buffer-window "*Calculator*" 'visible))
+  (with-no-warnings
+    (setq var-mccursors (mc/num-cursors))))
 
 (defun mc-calc--quit ()
   "Quit calc, if it was not already visible, and return to previous buffer."
