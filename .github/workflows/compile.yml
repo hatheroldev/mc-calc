@@ -1,4 +1,4 @@
-name: Behaviour Test
+name: Compile Test
 on: [push, pull_request]
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
           version: 'snapshot'
 
       - name: Run tests
-        run: make behaviourtest
+        run: make compile
