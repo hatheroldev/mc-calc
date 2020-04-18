@@ -64,20 +64,20 @@ You can
 (defvar mc-calc-from-buffer nil
   "The buffer to return to.")
 
-(defvar mc-calc-was-started nil
+(defvar mc-calc-was-started-p nil
   "Non-nil if calc buffer was already visible.")
 
 (defun mc-calc--eval-first-param (val)
   "Build fist `calc-eval' parameter and prepend VAL."
   (if (listp mc-calc-eval-options)
-      ;; Explicit calc setting
+      ;; Explicit calc setting.
       (let ((lang (cl-assoc-if
                    #'derived-mode-p
                    mc-calc-major-mode-eval-options-alist)))
         (append (cons val mc-calc-eval-options)
                 (when lang
                   (cdr lang))))
-    ;; Use calc as currently set
+    ;; Use calc as currently set.
     val))
 
 (defun mc-calc--eval (val &rest rest)
@@ -96,17 +96,16 @@ Set `mc-calc-eval-options' to configure calc options."
   (interactive)
   (let* ((vals (mc--ordered-region-strings))
          (num (length vals))
-         (i 0))                          ; Cursour number, usable as $ in formula
+         (i -1))                          ; Cursor number, usable as $ in formula.
     (setq mc--strings-to-replace
           (mapcar
            (lambda (val)
-             (prog1
-                 (mc-calc--eval
-                  val
-                  nil
-                  i                     ; Available as $ in calc-eval
-                  num)                  ; Available as $$ in calc-eval
-               (setq i (1+ i))))
+             (setq i (1+ i))
+             (mc-calc--eval
+              val
+              nil
+              i                         ; Available as $ in calc-eval.
+              num))                     ; Available as $$ in calc-eval.
            vals)))
   (mc--replace-region-strings))
 
@@ -120,7 +119,7 @@ Set `mc-calc-eval-options' to configure calc options."
 (defun mc-calc--quit ()
   "Quit calc, if it was not already visible, and return to previous buffer."
   (when mc-calc-from-buffer
-    (if mc-calc-was-started
+    (if mc-calc-was-started-p
         (pop-to-buffer mc-calc-from-buffer)
       (calc-quit t)
       (switch-to-buffer mc-calc-from-buffer)))
@@ -145,7 +144,7 @@ the result can be copied back with `mc-calc-copy-to-buffer'."
 (defun mc-calc-vec--grab (data)
   "Interpret DATA as list of strings and grab them into a calc vector.
 
-The variables `mc-calc-from-buffer' and `mc-calc-was-started' are set so that
+The variables `mc-calc-from-buffer' and `mc-calc-was-started-p' are set so that
 after some operations are performed on the vector the result can be copied
 back with `mc-calc-copy-to-buffer'."
   (mc-calc--set-values)
@@ -162,7 +161,7 @@ back with `mc-calc-copy-to-buffer'."
      (lambda (val)
        (setq data (cons (math-format-value val) data)))
      vals)
-    (calc-eval 1 'pop)                  ; Remove top element from calc stack
+    (calc-eval 1 'pop)                  ; Remove top element from calc stack.
     (nreverse data)))
 
 ;;; Do not autoload
@@ -177,7 +176,7 @@ from within the calc buffer."
   (let ((data (mc-calc-vec--top-get))
         (num-cursors (mc/num-cursors)))
     (when (eq (length data) 1)
-      ;; Extend single element to number of cursors
+      ;; Extend single element to number of cursors.
       (setq data (make-list num-cursors (car data))))
     (when (not (eq (length data) num-cursors))
       (user-error "Vector length does not match number of multiple cursors"))

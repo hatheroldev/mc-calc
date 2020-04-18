@@ -29,7 +29,7 @@
 (ert-deftest mc-calc-test/set-values ()
   (mc-calc--set-values)
   (should (equal (format "%S" mc-calc-from-buffer) "#<buffer  *temp*>"))
-  (should (equal (format "%S" mc-calc-was-started) "nil"))
+  (should (equal (format "%S" mc-calc-was-started-p) "nil"))
   (should (equal var-mccursors 1)))
 
 (ert-deftest mc-calc-test/vec-grab-1 ()
