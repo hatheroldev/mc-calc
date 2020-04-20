@@ -19,11 +19,27 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; This package allows the use of calc in regions with multiple cursors.
+;; This package allows the use of calc in regions with multiple-cursors.
+;;
+;; Use ~M-x package-install mc-calc~ to install this package.
+;;
+;; Use ~M-x mc-calc-eval~ to replace multiple regions with result from
+;; evaluating in calc.
+;;
+;; Use ~M-x mc-calc-grab~ to grab multiple regions as vector in calc and
+;; open calc (returnable to current buffer).
+;;
+;; Use ~M-x mc-calc~ to open calc (returnable to current buffer).
+;;
+;; Use ~M-x mc-calc-copy-to-buffer~ to replace multiple regions
+;; from top level vector and return to buffer.
+;;
+;; You can customize used calc options in `mc-calc-eval-options'
+;; and `mc-calc-major-mode-eval-options-alist'.
 
 ;;; Code:
 
@@ -178,7 +194,7 @@ from within the calc buffer."
     (when (eq (length data) 1)
       ;; Extend single element to number of cursors.
       (setq data (make-list num-cursors (car data))))
-    (when (not (eq (length data) num-cursors))
+    (unless (eq (length data) num-cursors)
       (user-error "Vector length does not match number of multiple cursors"))
     (setq mc--strings-to-replace data))
   (mc--replace-region-strings)

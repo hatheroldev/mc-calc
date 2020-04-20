@@ -2,29 +2,28 @@ EMACS ?= emacs
 CASK ?= cask
 
 all:
-	${MAKE} cask
 	${MAKE} compile
 	${MAKE} unittest
 	${MAKE} behaviourtest
 	${MAKE} clean
 
-cask:
+.cask:
 	${CASK}
 
-compile: cask
+compile: .cask
 	${CASK} exec ${EMACS} -Q -batch -L . -eval \
 	"(progn \
      (when (version<= \"24.3\" emacs-version) \
      (setq byte-compile-error-on-warn t)) \
      (batch-byte-compile))" mc-calc.el
 
-lint: cask
+lint: .cask
 	${CASK} exec ${EMACS} -Q --batch -l elisp-lint.el -f elisp-lint-files-batch *.el
 
-unittest: cask
+unittest: .cask
 	${CASK} exec ert-runner
 
-behaviourtest: cask
+behaviourtest: .cask
 	${CASK} exec ecukes --quiet
 
 clean:
